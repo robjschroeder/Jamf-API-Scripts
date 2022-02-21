@@ -1,0 +1,17 @@
+#!/bin/sh
+
+curl --request POST \
+     --url https://yourserver.jamfcloud.com/api/v1/macos-managed-software-updates/send-updates \
+     --header 'Accept: application/json' \
+     --header 'Content-Type: application/json' \
+     --data '
+{
+     "deviceIds": [
+          "13",
+          "14"
+     ],
+     "maxDeferrals": 3,
+     "version": "12.2",
+     "updateAction": "DOWNLOAD_AND_INSTALL"
+}
+'
