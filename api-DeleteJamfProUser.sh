@@ -1,7 +1,7 @@
 #!/bin/zsh
 #
-# Script will generate a bearer token for use
-# with JPAPI
+# Script to delete a Jamf Pro user account.
+# The id number of the account will be needed.
 #
 # Updated: 2.22.2022 @ Robjschroeder                 
 #
