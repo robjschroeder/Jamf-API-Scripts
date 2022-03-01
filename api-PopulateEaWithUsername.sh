@@ -1,27 +1,36 @@
 #!/bin/bash
 
-# This script will pass the username from the mobile devices mobile record into a separate EA field.
+# This script will pass the username from the
+# mobile devices mobile record into a separate
+# EA field.
+#
+# Updated: 3.01.2022 @ Robjschroeder  
 
-#Add API credentials
+# Variables
+
+# Add API credentials
 username="apiUsername"
 password="apiPassword"
 URL="https://jamf.pro.com"
 
+# Enter the EA ID number that you would like
+# to populate
+EA="5"
+
+# Script work #
 encodedCredentials=$( printf "${username}:${password}" | /usr/bin/iconv -t ISO-8859-1 | /usr/bin/base64 -i - )
 
-# generate an auth token
+# Generate an auth token
 authToken=$( /usr/bin/curl "${URL}/uapi/auth/tokens" \
 --silent \
 --request POST \
 --header "Authorization: Basic ${encodedCredentials}" )
 
-# parse authToken for token, omit expiration
+# Parse authToken for token, omit expiration
 token=$( /usr/bin/awk -F \" '{ print $4 }' <<< "$authToken" | /usr/bin/xargs )
 
-#Get
-# Enter the EA ID number that you would like to populate
-EA="5"
-
+# Grab the ids of all mobile devices and
+# store then in an array
 ids+=($(curl -s -H "accept: text/xml" -H "authorization: Bearer ${token}" -S ${URL}/JSSResource/mobiledevices -X GET | xmllint --format - | awk -F'>|<' '/<id>/{print $3}' | sort -n))
 
 for id in "${ids[@]}"; do
