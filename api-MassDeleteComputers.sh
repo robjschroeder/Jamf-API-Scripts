@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Script will pull computer ids from
+# a text file specified in the variables
+# and delete the computer from Jamf Pro
+#
+# Updated: 3.01.2022 @ Robjschroeder  
+
+# Variables #
+
 # Specifiy location of text file with computer ids that you want to delete from Jamf Pro
 file="~/Desktop/ids.txt"
 
@@ -26,3 +34,5 @@ for id in "${ids[@]}"; do
 	echo "Delete computer: $id"
 	curl -X DELETE "$URL/api/v1/computers-inventory/$id" -H "accept: */*" -H "Authorization: Bearer $token"
 done
+
+exit 0
