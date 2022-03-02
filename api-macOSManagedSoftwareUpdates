@@ -1,5 +1,14 @@
 #!/bin/sh
 
+# Use the Jamf Pro API to send macOS updates
+# to computers listed in the deviceIds array
+# identified by their id. maxDefferrals, 
+# version, and updateAction can be changed 
+# for your specific needs.
+#
+# Updated: 3.01.2022 @ Robjschroeder  
+
+
 curl --request POST \
      --url https://yourserver.jamfcloud.com/api/v1/macos-managed-software-updates/send-updates \
      --header 'Accept: application/json' \
