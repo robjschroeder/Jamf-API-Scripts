@@ -30,7 +30,7 @@ curl --request POST \
      --url https://yourserver.jamfcloud.com/api/v1/macos-managed-software-updates/send-updates \
      --header 'Accept: application/json' \
      --header 'Content-Type: application/json' \
-     --header '
+     --header 'Authorization: Bearer ${token}' \
      --data '
 {
      "deviceIds": [
