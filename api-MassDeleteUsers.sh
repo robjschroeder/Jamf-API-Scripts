@@ -1,14 +1,12 @@
-#!/bin/bash
-
-### 
+#!/bin/bash 
 
 #This script will grab all the ids of User objects in Jamf Pro, store them in an array
 #loop through that array and send a delete command to the Users api endpoint. 
 #Users that have devices assigned to them will not be deleted as the device acts
 #as a dependency of their account. Only accounts that do not have a devices associated
 #with it will be deleted
-
-###
+#
+# Updated: 3.01.2022 @ Robjschroeder  
 
 
 ### Variables ###
@@ -55,4 +53,4 @@ for ((i = 0 ; i < ${#ids[@]} ; i++)); do
 	(( start=start+${elements} ))
 done
 
-exit
+exit 0
