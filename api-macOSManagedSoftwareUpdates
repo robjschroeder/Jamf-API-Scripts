@@ -15,6 +15,21 @@ username="apiUsername"
 password="apiPassword"
 URL="https://jamf.pro.com"
 
+# Update settings
+
+# Allow users to defer the update the provided number of 
+# times before macOS forces the update. If a value is 
+# provided, the Software Update will use the InstallLater install action.
+maxDeferrals=""
+
+# If no value is provided, the version will default to latest version based 
+# on device eligibility.
+version=""
+
+# MaxDeferral is ignored if using the DownloadOnly install action.
+# Options: DOWNLOAD_ONLY or DOWNLOAD_AND_INSTALL
+updateAction=""
+
 encodedCredentials=$( printf "${username}:${password}" | /usr/bin/iconv -t ISO-8859-1 | /usr/bin/base64 -i - )
 
 # Generate an auth token
@@ -37,8 +52,8 @@ curl --request POST \
           "13",
           "14"
      ],
-     "maxDeferrals": 3,
-     "version": "12.2",
-     "updateAction": "DOWNLOAD_AND_INSTALL"
+     "maxDeferrals": ${maxDeferrals},
+     "version": "${version}",
+     "updateAction": "${updateAction}"
 }
 '
