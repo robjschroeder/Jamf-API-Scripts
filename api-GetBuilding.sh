@@ -13,7 +13,7 @@ password="apiPassword"
 URL="https://server.jamf.com"
 
 # Instance id of Building
-id="7"
+id=""
 
 # Generate encoded credentials
 encodedCredentials=$( printf "${username}:${password}" | /usr/bin/iconv -t ISO-8859-1 | /usr/bin/base64 -i - )
