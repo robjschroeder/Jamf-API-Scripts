@@ -43,10 +43,10 @@ token=$( /usr/bin/awk -F \" '{ print $4 }' <<< "$authToken" | /usr/bin/xargs )
 
 curl --request POST \
      --url https://yourserver.jamfcloud.com/api/v1/macos-managed-software-updates/send-updates \
-     --header 'Accept: application/json' \
-     --header 'Content-Type: application/json' \
-     --header 'Authorization: Bearer ${token}' \
-     --data '
+     --header "Accept: application/json" \
+     --header "Content-Type: application/json" \
+     --header "Authorization: Bearer ${token}" \
+     --data "
 {
      "deviceIds": [
           "13",
@@ -56,4 +56,6 @@ curl --request POST \
      "version": "${version}",
      "updateAction": "${updateAction}"
 }
-'
+"
+
+exit 0
