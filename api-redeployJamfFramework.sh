@@ -28,8 +28,8 @@ authToken=$( /usr/bin/curl "${URL}/uapi/auth/tokens" \
 token=$( /usr/bin/awk -F \" '{ print $4 }' <<< "$authToken" | /usr/bin/xargs )
 
 curl --request POST \
-     --url https://${URL}.jamfcloud.com/api/v1/jamf-management-framework/redeploy/${id} \
-     --header 'Accept: application/json'
-     --heater 'Authorization: Bearer ${token}'
+--url ${URL}/api/v1/jamf-management-framework/redeploy/${id} \
+--header "Accept: application/json" \
+--heater "Authorization: Bearer ${token}"
 
 exit 0
