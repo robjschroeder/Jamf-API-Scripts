@@ -1,7 +1,6 @@
 #!/bin/sh
 
-# Displays information of Building
-# in Jamf Pro
+# Get the latest sync state for a single instance
 #
 # Updated: 3.03.2022 @ Robjschroeder  
 
@@ -11,6 +10,9 @@
 username="apiUsername"
 password="apiPassword"
 URL="https://server.jamf.com"
+
+# Device Enrollment Instance identifier
+id=""
 
 # Generate encoded credentials
 encodedCredentials=$( printf "${username}:${password}" | /usr/bin/iconv -t ISO-8859-1 | /usr/bin/base64 -i - )
@@ -25,7 +27,7 @@ authToken=$( /usr/bin/curl "${URL}/uapi/auth/tokens" \
 token=$( /usr/bin/awk -F \" '{ print $4 }' <<< "$authToken" | /usr/bin/xargs )
 
 curl --request GET \
---url ${URL}/api/v1/device-enrollments/1/syncs/latest \
+--url ${URL}/api/v1/device-enrollments/${id}/syncs/latest \
 --header "Accept: application/json" \
 --header "Authorization: Bearer ${token}" \
 --output -
