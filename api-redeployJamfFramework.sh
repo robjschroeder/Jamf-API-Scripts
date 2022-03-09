@@ -3,7 +3,7 @@
 # Redeploys the Jamf Management Framework 
 # for enrolled device
 #
-# Updated: 3.02.2022 @ Robjschroeder  
+# Updated: 3.09.2022 @ Robjschroeder  
 
 # Variables
 
@@ -30,6 +30,6 @@ token=$( /usr/bin/awk -F \" '{ print $4 }' <<< "$authToken" | /usr/bin/xargs )
 curl --request POST \
 --url ${URL}/api/v1/jamf-management-framework/redeploy/${id} \
 --header "Accept: application/json" \
---heater "Authorization: Bearer ${token}"
+--header "Authorization: Bearer ${token}"
 
 exit 0
