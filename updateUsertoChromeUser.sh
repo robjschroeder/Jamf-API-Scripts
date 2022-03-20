@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# This script will find the currently
+# logged in user and then set that user 
+# as the username in Jamf Pro
+#
+# Updated: 3.19.2022 @ Robjschroeder  
+
+# Variables
+
 #Add API credentials
 username="$4"
 password="$5"
@@ -13,12 +21,8 @@ loggedInUser=$(/usr/sbin/scutil <<< "show State:/Users/ConsoleUser" | awk '/Name
 
 serial=$( system_profiler SPHardwareDataType | awk '/Serial/{print $NF}')
 
-## Get Chrome email address
-
-#chromestate=$(cat /Users/$loggedInUser/Library/Application\ Support/Google/Chrome/Local\ State | grep user_name)
-
-#user_email=$(echo $chromestate | grep -o -E 'user_name":"[^"]+' | cut -d ':' -f 2 | tr -d '"' | grep shift\.com)
-
 # Update Computer Record in Jamf Pro
 
-curl -su "$username":"$password" -H "content-type: text/xml" $URL/JSSResource/computers/serialnumber/$serial -X PUT -d "<computer><location><email_address>test@test.com</email_address></location></computer>"
+curl -su "${username}":"${password}" -H "content-type: text/xml" ${URL}/JSSResource/computers/serialnumber/${serial} -X PUT -d "<computer><location><username>${loggedInUser}</username></location></computer>"
+
+exit 0
