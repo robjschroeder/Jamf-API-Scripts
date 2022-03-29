@@ -96,28 +96,33 @@ data=$( curl --request GET \
 # notification using jq and notify
 for str in ${noticationsArr[@]}; do
 	if [[ " ${data} " =~ ${str} ]]; then
+		# Create a clean string because the webhook doesn't like "_"
+		cleanString=$( echo ${str} | sed 's/_/ /g' )
 		name=$( echo ${data} | jq --arg v "${str}" '.[]|select(.type==$v).params.name')
+		# Create a clean name because the webhook doesn't like """
+		cleanname=$( echo ${name} | sed 's/"//g')
 		days=$( echo ${data} | jq --arg v "${str}" '.[]|select(.type==$v).params.days')
 		id=$( echo ${data} | jq --arg v "${str}" '.[]|select(.type==$v).params.id')
-		echo "${JPInstance} notification: ${str}"
 		if [[ ${name} != "null" ]]; then
-			echo "Name: ${name}"
+			if [[ ${days} != "null" ]]; then
+				if [[ ${id} != "null" ]]; then
+					message=$( echo "${JPInstance} Notification: ${cleanString} for ${cleanname} in ${days} days" )
+				else
+					message=$( echo "${JPInstance} Notification: ${cleanString} for ${cleanname} in ${days} days" )
+				fi
+			else
+				message=$( echo "${JPInstance} Notification: ${cleanString} for ${name}" )
+			fi
+		else
+			message=$( echo "${JPInstance} Notification: ${cleanString}" )
 		fi
-		if [[ ${days} != "null" ]]; then
-			echo "Days: ${days}"
-		fi
-		if [[ ${id} != "null" ]]; then
-			echo "ID: ${id}"
-		fi
-		echo ""
-    # Results expected to look like:
-    #
-    # SERVER notification: DEP_INSTANCE_WILL_EXPIRE
-    # Name: "DEP Instance"
-    # Days: 19
-    # ID: 2
-    #
-    # SERVER notification: EXCEEDED_LICENSE_COUNT
-    #
+		# Results expected to look like:
+		# JAMFPRO Notification: DEP INSTANCE WILL EXPIRE for DEP Instance in 18 days
+		# or
+		# JAMFPRO Notification: EXCEEDED LICENSE COUNT
+		
+		echo ${message}
 	fi
 done
+
+exit 0
