@@ -42,7 +42,7 @@ authToken=$( /usr/bin/curl "${URL}/uapi/auth/tokens" \
 token=$( /usr/bin/awk -F \" '{ print $4 }' <<< "$authToken" | /usr/bin/xargs )
 
 curl --request POST \
-     --url https://yourserver.jamfcloud.com/api/v1/macos-managed-software-updates/send-updates \
+     --url ${URL}/api/v1/macos-managed-software-updates/send-updates \
      --header "Accept: application/json" \
      --header "Content-Type: application/json" \
      --header "Authorization: Bearer ${token}" \
