@@ -36,11 +36,19 @@ for id in "${ids[@]}"; do
 <xsl:template match="/"> 
 <xsl:text>Advance Search Name: </xsl:text>
 <xsl:value-of select="advanced_computer_search/name"/> 
-<xsl:text>&#xa;</xsl:text> 
+<xsl:text>&#xa;</xsl:text>
+<xsl:text>&#xa;</xsl:text>
    <xsl:for-each select="advanced_computer_search/criteria/criterion"> 
       <xsl:text>Criteria Used: </xsl:text> 
       <xsl:value-of select="name"/>
-      <xsl:text>&#xa;</xsl:text> 
+      <xsl:text>&#xa;</xsl:text>
+      <xsl:text>Operator: </xsl:text>
+      <xsl:value-of select="search_type"/>
+      <xsl:text>&#xa;</xsl:text>
+      <xsl:text>Value: </xsl:text> 
+      <xsl:value-of select="value"/>
+      <xsl:text>&#xa;</xsl:text>
+      <xsl:text>&#xa;</xsl:text>
    </xsl:for-each> 
 </xsl:template> 
 </xsl:stylesheet>
