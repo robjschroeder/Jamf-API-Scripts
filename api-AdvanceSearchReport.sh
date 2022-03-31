@@ -7,9 +7,9 @@
 # Variables
 
 # Add API credentials
-username="api"
-password="jamf1234"
-URL="https://rschroeder.jamfcloud.com"
+username="apiUsername"
+password="apiPassword"
+URL="https://server.jamfcloud.com"
 
 encodedCredentials=$( printf "${username}:${password}" | /usr/bin/iconv -t ISO-8859-1 | /usr/bin/base64 -i - )
 
