@@ -54,7 +54,8 @@ for id in "${ids[@]}"; do
 </xsl:stylesheet>
 EOF
    #######################################
-   # Request a list of computers from the Jamf Pro Classic API
+   # Request a list of Advanced Computer Searches from the 
+   # Jamf Pro Classic API
    # Pass the XML data to xsltproc applying the stylesheet
    #######################################
    
