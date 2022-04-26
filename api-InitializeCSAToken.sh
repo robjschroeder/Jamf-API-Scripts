@@ -1,5 +1,12 @@
 #/bin/bash
 
+# This Jamf Pro API script will initialize the Cloud
+# Services Connection in Jamf Pro. A valid Jamf ID will
+# need to be used for the csa variables.
+#
+# Created 4.26.2022 @robjschroeder
+#
+
 # Variables
 #
 # Add API credentials
