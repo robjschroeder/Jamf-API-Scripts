@@ -5,6 +5,8 @@
 # be some breaking changes in the future.
 #
 # Updated: 3.03.2022 @ Robjschroeder  
+#
+# Updated: 4.27.2022 @robjschroeder -- added token invalidation
 
 # Variables
 
@@ -30,5 +32,11 @@ curl --request GET \
 --header "Accept: application/json" \
 --header "Authorization: Bearer ${token}" \
 --output -
+
+# Invalidate the token
+curl --request POST \
+--url ${URL}/api/v1/auth/invalidate-token \
+--header 'Accept: application/json' \
+--header "Authorization: Bearer ${token}"
 
 exit 0
