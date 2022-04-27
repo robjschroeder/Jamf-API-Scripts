@@ -6,6 +6,8 @@
 
 # Created 4.19.2022 @robjschroeder
 
+# Updated 4.27.2022 @robjschroeder -- added token invalidation
+
 # Jamf User Credentials
 jamfUser="apiUsername"
 jamfPassword="apiPassword"
@@ -47,3 +49,11 @@ for serial in ${serialsArr[@]}; do
 	--header "Authorization: Bearer ${token}" --header "Content-Type: text/xml" \
 	--data "${apiData}"
 done
+
+# Invalidate the token
+curl --request POST \
+--url ${URL}/api/v1/auth/invalidate-token \
+--header 'Accept: application/json' \
+--header "Authorization: Bearer ${token}"
+
+exit 0
