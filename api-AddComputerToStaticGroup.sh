@@ -52,7 +52,7 @@ done
 
 # Invalidate the token
 curl --request POST \
---url ${URL}/api/v1/auth/invalidate-token \
+--url ${jssURL}/api/v1/auth/invalidate-token \
 --header 'Accept: application/json' \
 --header "Authorization: Bearer ${token}"
 
