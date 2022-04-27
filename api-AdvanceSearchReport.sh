@@ -3,6 +3,8 @@
 # Get the criteria being used my advnaced computer searches
 #
 # Created: 3.31.2022 @ Robjschroeder  
+#
+# Updated: 4.27.2022 @robjschroeder -- added token invalidation
 
 # Variables
 
