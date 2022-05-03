@@ -7,6 +7,10 @@
 # for your specific needs.
 #
 # Updated: 3.01.2022 @ Robjschroeder  
+#
+# Updated: 05.03.2022 @robjschroeder 
+# Added a couple more parameters as Jamf added
+# some additional functionality
 
 # Variables
 
@@ -26,9 +30,27 @@ maxDeferrals=""
 # on device eligibility.
 version=""
 
+# If no value is provided, the skipVersionVerification will default to false. 
+# If a value is provided, the specified version will be forced to complete 
+# DownloadAndInstall install action.
+skipVersionVerification=""
+
+# ApplyMajorUpdate setting is available only when updating to the latest version 
+# based on device eligibility. If no value is provided, the calculated latest version 
+# will only include minor version updates. If a value is provided, the calculated latest 
+# version will include minor and major version updates.
+applyMajorUpdate=""
+
+# If not set, forceRestart will default to false. Can only be true if using 
+# the DownloadAndInstall install action and the devices the command is sent 
+# to are on macOs 11 or higher. If true, the DownloadAndInstall action is performed, 
+# a restart will be forced. MaxDeferral will be ignored if defined.
+forceRestart=""
+
 # MaxDeferral is ignored if using the DownloadOnly install action.
 # Options: DOWNLOAD_ONLY or DOWNLOAD_AND_INSTALL
 updateAction=""
+
 
 encodedCredentials=$( printf "${username}:${password}" | /usr/bin/iconv -t ISO-8859-1 | /usr/bin/base64 -i - )
 
@@ -54,6 +76,9 @@ curl --request POST \
      ],
      "maxDeferrals": ${maxDeferrals},
      "version": "${version}",
+     "skipVersionVerification": "${skipVersionVerification}",
+     "applyMajorUpdate": "${applyMajorUpdate}",
+     "forceRestart": "${forceRestart}",
      "updateAction": "${updateAction}"
 }
 "
