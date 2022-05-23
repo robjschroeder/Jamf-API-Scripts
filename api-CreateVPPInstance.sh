@@ -68,23 +68,14 @@ createVPP(){
 # Script Work
 #
 #
+
 # Create a Volume Purchasing Location
-createVPP(){
-	curl --request POST \
-	--url ${jamfProURL}/api/v1/volume-purchasing-locations \
-	--header 'Accept: application/json' \
-	--header 'Content-Type: application/json' \
-	--header "Authorization: Bearer ${token}" \
-	--data '
-{
-	"automaticallyPopulatePurchasedContent": true,
-	"sendNotificationWhenNoLongerAssigned": true,
-	"autoRegisterManagedUsers": true,
-	"siteId": "-1",
-	"name": "'"${OrgName}"' VPP",
-	"serviceToken": "'"${sToken}"'"
-}
-'
-}
+if [ -z ${sToken} ]; then
+	echo "Value for sToken is blank, please provide this data"
+else
+	getBearerToken
+	createVPP
+	invalidateTo
+fi
 
 exit 0
