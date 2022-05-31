@@ -5,10 +5,6 @@
 
 # Variables -- edit these based on needs
 #
-# Add API credentials
-username="apiUsername"
-password="apiPassword"
-
 
 # Jamf Pro Instances Array
 instances=(
@@ -44,6 +40,7 @@ for inst in ${instances[@]}; do
 			echo -n "${JPInstance}: ERROR from curl is: $serverstat01"
 		fi
 	fi
+	sleep 30
 done
 done
 exit 0
