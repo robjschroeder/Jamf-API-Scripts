@@ -40,7 +40,8 @@ for inst in ${instances[@]}; do
 			echo -n "${JPInstance}: ERROR from curl is: $serverstat01"
 		fi
 	fi
-	sleep 30
+	sleep 1
 done
+sleep 30
 done
 exit 0
