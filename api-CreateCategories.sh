@@ -68,12 +68,9 @@ done
 #
 #
 # Create Category records
-if [ -z ${categories} ]; then
-	echo "Categories array is empty, please add some categories"
-else
-	getBearerToken
-	createCategories
-	invalidateToken
-fi
+
+getBearerToken
+createCategories
+invalidateToken
 
 exit 0
