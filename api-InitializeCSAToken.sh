@@ -68,12 +68,8 @@ createCSA(){
 #
 #
 # Initialize Cloud Services Connection
-if [ -z ${JNEmail} || -z ${JNPassword} ]; then
-	echo "Jamf Nation credentials not defined, please verify"
-else
-	getBearerToken
-	createCSA
-	invalidateToken
-fi
+getBearerToken
+createCSA
+invalidateToken
 
 exit 0
