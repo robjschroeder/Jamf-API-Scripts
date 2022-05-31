@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get the Jamf Pro Startup Status for
-# Jamf Pro Server
+# multiple Jamf Pro Servers
 
 # Variables -- edit these based on needs
 #
