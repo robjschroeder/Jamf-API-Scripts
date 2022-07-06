@@ -109,8 +109,6 @@ uploadComputerPolicies(){
 		computerPolicyData=$(curl --silent $computerPolicy)
 		curl --request POST \
 		--url ${jamfProURL}/JSSResource/policies/id/0 \
-		--cookie "$cookie_jar" \
-		--cookie-jar "$cookie_jar" \
 		--header 'Accept: application/xml' \
 		--header 'Content-Type: application/xml' \
 		--header "Authorization: Bearer ${token}" \
@@ -128,8 +126,6 @@ uploadComputerGroups(){
 		computerGroupData=$(curl --silent $computerGroup)
 		curl --request POST \
 		--url ${jamfProURL}/JSSResource/computergroups/id/0 \
-		--cookie "$cookie_jar" \
-		--cookie-jar "$cookie_jar" \
 		--header 'Accept: application/xml' \
 		--header 'Content-Type: application/xml' \
 		--header "Authorization: Bearer ${token}" \
