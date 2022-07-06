@@ -158,6 +158,7 @@ updateSG(){
 checkTokenExpiration
 uploadComputerPatchSoftwareTitles 
 uploadComputerGroups 
+# Sleep for 30 seconds, because the policy may not be able to match the scope to the Smart Group that was just created
 sleep 30
 uploadComputerPolicies 
 updateSG
