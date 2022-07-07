@@ -1,28 +1,24 @@
 #!/bin/bash
 
-# This Jamf Pro API script will update the
-# activation code on Jamf Pro with the one
-# provided in the variables.
+# This script will find the currently
+# logged in user and then set that user 
+# as the username in Jamf Pro
 #
-# Created 5.20.2022 @robjschroeder
+# Updated: 3.19.2022 @ Robjschroeder
 #
-# Updated 07.07.2022 @robjschroeder
+# Update: 07.07.2022 @robjschroeder
 
 ##################################################
 # Variables -- edit as needed
 
-# Jamf Pro API Credentials
-jamfProAPIUsername=""
-jamfProAPIPassword=""
-jamfProURL=""
+#--------------------------------------------------------------#
 
-# Token declarations
-token=""
-tokenExpirationEpoch="0"
+#Add API credentials
+jamfProAPIUsername="$4"
+jamfProAPIPassword="$5"
+jamfProURL=$( defaults read /Library/Preferences/com.jamfsoftware.jamf.plist jss_url | sed s'/.$//' )
 
-# Activation Code Details
-orgName=""
-activationCode=""
+#--------------------------------------------------------------#
 
 #
 ##################################################
@@ -38,34 +34,7 @@ getBearerToken(){
 	tokenExpirationEpoch=$(/bin/date -j -f "%Y-%m-%dT%T" "${tokenExpiration}" +"%s")
 }
 
-checkVariables(){
-	# Checking for Jamf Pro API variables
-	if [ -z $jamfProAPIUsername ]; then
-		echo "Please enter your Jamf Pro Username: "
-		read -r jamfProAPIUsername
-	fi
-	
-	if [  -z $jamfProAPIPassword ]; then
-		echo "Please enter your Jamf Pro password for $jamfProAPIUsername: "
-		read -r -s jamfProAPIPassword
-	fi
-	
-	if [ -z $jamfProURL ]; then
-		echo "Please enter your Jamf Pro URL (with no slash at the end): "
-		read -r jamfProURL
-	fi
-	
-	# Checking for additional variables
-	# Activation Code
-	if [ $activationCode = "" ]; then
-		read -p "Please enter the Activation Code for Jamf Pro: " activationCode
-	fi
-	# Organizational Name
-	if [ $orgName = "" ]; then
-		read -p "Please enter the Organization Name: " orgName
-	fi
-}
-
+# Check the expiration of the bearer token
 checkTokenExpiration() {
 	nowEpochUTC=$(/bin/date -j -f "%Y-%m-%dT%T" "$(/bin/date -u +"%Y-%m-%dT%T")" +"%s")
 	if [[ tokenExpirationEpoch -gt nowEpochUTC ]]
@@ -93,23 +62,40 @@ invalidateToken(){
 	fi
 }
 
-updateActivationCode(){
-	curl --request PUT \
-	--url ${jamfProURL}/JSSResource/activationcode \
-	--header 'Content-Type: application/xml' \
-	--data '{"organization_name":"'"${orgName}"'","code":"'"${activationCode}"'"}'
+# Exit the script with a status of 1 if JPAPI information missing
+exit1(){
+	echo "Insufficient Jamf Pro API information"
+	exit 1
 }
 
 #
 ##################################################
 # Script Work
 #
-#
-# Calling all functions
 
-checkVariables 
-checkTokenExpiration
-updateActivationCode 
-invalidateToken
+# Check Jamf Pro API variables
+if [ $jamfProAPIUsername = "" ]; then
+	echo "Jamf Pro API username not defined, exiting script"
+	exit1
+fi
+
+if [ $jamfProAPIPassword = "" ]; then
+	echo "Jamf Pro API password not defined, exiting script"
+	exit1
+fi
+
+if [ $jamfProURL = "" ]; then
+	echo "Jamf Pro URL not defined, exiting script"
+	exit1
+fi
+
+## Get Logged In User
+loggedInUser=$(/usr/sbin/scutil <<< "show State:/Users/ConsoleUser" | awk '/Name :/ && ! /loginwindow/ {print $3}')
+
+## Get Serial Of Device
+serial=$( system_profiler SPHardwareDataType | awk '/Serial/{print $NF}')
+
+# Update Computer Record in Jamf Pro
+curl -H "Authorization: Bearer ${token}" -H "content-type: text/xml" ${jamfProURL}/JSSResource/computers/serialnumber/${serial} -X PUT -d "<computer><location><username>${loggedInUser}</username></location></computer>"
 
 exit 0

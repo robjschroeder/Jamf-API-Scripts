@@ -39,6 +39,25 @@ getBearerToken(){
 	tokenExpirationEpoch=$(/bin/date -j -f "%Y-%m-%dT%T" "${tokenExpiration}" +"%s")
 }
 
+checkVariables(){
+	# Checking for Jamf Pro API variables
+	if [ -z $jamfProAPIUsername ]; then
+		echo "Please enter your Jamf Pro Username: "
+		read -r jamfProAPIUsername
+	fi
+	
+	if [  -z $jamfProAPIPassword ]; then
+		echo "Please enter your Jamf Pro password for $jamfProAPIUsername: "
+		read -r -s jamfProAPIPassword
+	fi
+	
+	if [ -z $jamfProURL ]; then
+		echo "Please enter your Jamf Pro URL (with no slash at the end): "
+		read -r jamfProURL
+	fi
+	
+}
+
 checkTokenExpiration() {
 	nowEpochUTC=$(/bin/date -j -f "%Y-%m-%dT%T" "$(/bin/date -u +"%Y-%m-%dT%T")" +"%s")
 	if [[ tokenExpirationEpoch -gt nowEpochUTC ]]
@@ -89,6 +108,7 @@ renewMDM(){
 #
 # Calling all functions
 
+checkVariables 
 checkTokenExpiration
 renewMDM 
 invalidateToken

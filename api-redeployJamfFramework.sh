@@ -3,7 +3,8 @@
 # Redeploys the Jamf Management Framework 
 # for enrolled device
 #
-# Updated: 3.09.2022 @ Robjschroeder  
+# Updated: 3.09.2022 @ Robjschroeder
+# Updated: 07.07.2022 @robjschroeder
 
 ##################################################
 # Variables -- edit as needed
