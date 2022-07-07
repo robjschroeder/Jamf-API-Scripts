@@ -88,6 +88,10 @@ getEnrollmentDate(){
 	done
 }
 
+cleanUp(){
+	rm -rf /tmp/stylesheet.xslt
+}
+
 #
 ##################################################
 # Script Work
@@ -124,3 +128,6 @@ checkVariables
 checkTokenExpiration
 getEnrollmentDate 
 invalidateToken
+cleanUp 
+
+exit 0
