@@ -8,12 +8,12 @@
 # Variables -- edit as needed
 
 # Organization Name
-OrgName="IMADEV"
+OrgName=""
 
 # Jamf Pro API Credentials
-jamfProAPIUsername="api_PowerAutomate"
-jamfProAPIPassword="V6#w9zJzh2jVVG@&"
-jamfProURL="https://imadev.jamfcloud.com"
+jamfProAPIUsername=""
+jamfProAPIPassword=""
+jamfProURL=""
 
 # Default Prestage Variables, make sure all values are correct including the deviceEnrollmentProgramInstanceID for your Jamf Pro
 computerPrestageData=$(cat <<EOF
