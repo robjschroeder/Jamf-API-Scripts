@@ -2,6 +2,8 @@
 
 # Get the Jamf Pro Startup Status for
 # Jamf Pro Server
+#
+# Updated: 07.07.2022 @robjschroeder
 
 # Variables -- edit these based on needs
 #
