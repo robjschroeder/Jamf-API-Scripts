@@ -3,8 +3,10 @@
 # Get the Jamf Pro Startup Status for
 # multiple Jamf Pro Servers
 
-# Variables -- edit these based on needs
-#
+# Updated 07.08.2022 @robjschroeder
+
+##################################################
+# Variables -- edit as needed
 
 # Jamf Pro Instances Array
 instances=(
@@ -17,31 +19,33 @@ instances=(
 
 #
 ##################################################
-# Script Work -- do not edit below here
+# Script Work
+#
 while :
 do
-# Loop through each instance in the 
-# instance array
-for inst in ${instances[@]}; do
-	URL="${inst}"
-	JPInstance=$( echo ${URL} | sed 's|^http[s]://||g' | sed 's/\..*//' | tr '[a-z]' '[A-Z]' )
-	
-	# Returns curl health check error from Jamf Pro if found
-	echo -n "Status ${JPInstance} Server Health Check ===>"
-	curl -k -m 5 -s ${inst}/healthCheck.html
-	serverstat01=$(echo $?)
-	# do not put anything between the curl command above and the variable that collects the output
-	if [ ! $serverstat01 = '0' ]; then
-		echo "Checking again: ${JPInstance}"
-		echo -n "Status ${JPInstance} Server check 2 ===>"
+	# Loop through each instance in the 
+	# instance array
+	for inst in ${instances[@]}; do
+		URL="${inst}"
+		JPInstance=$( echo ${URL} | sed 's|^http[s]://||g' | sed 's/\..*//' | tr '[a-z]' '[A-Z]' )
+		
+		# Returns curl health check error from Jamf Pro if found
+		echo -n "Status ${JPInstance} Server Health Check ===>"
 		curl -k -m 5 -s ${inst}/healthCheck.html
 		serverstat01=$(echo $?)
+		# do not put anything between the curl command above and the variable that collects the output
 		if [ ! $serverstat01 = '0' ]; then
-			echo -n "${JPInstance}: ERROR from curl is: $serverstat01"
+			echo "Checking again: ${JPInstance}"
+			echo -n "Status ${JPInstance} Server check 2 ===>"
+			curl -k -m 5 -s ${inst}/healthCheck.html
+			serverstat01=$(echo $?)
+			if [ ! $serverstat01 = '0' ]; then
+				echo -n "${JPInstance}: ERROR from curl is: $serverstat01"
+			fi
 		fi
-	fi
-	sleep 1
-done
-sleep 30
+		sleep 1
+	done
+	sleep 30
 done
 exit 0
+
