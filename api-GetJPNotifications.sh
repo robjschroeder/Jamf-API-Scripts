@@ -6,6 +6,7 @@
 # Updated: 3.28.2022 @ Robjschroeder  
 #
 # Updated 07.08.2022 @robjschroeder
+# Updated 07.26.2022 @robjschroeder -- changed line 167 to look for $cleanString
 
 ##################################################
 # Variables -- edit as needed
@@ -142,10 +143,13 @@ invalidateToken(){
 checkNotifications(){
 	# Returns important notifications from Jamf Pro in JSON
 	data=$( curl --request GET \
+--silent \
 --url "${jamfProURL}/api/v1/notifications" \
 --header "Accept: application/json" \
 --header "Authorization: Bearer ${token}" \
 )
+	
+	echo $data
 	JPInstance=$( echo ${jamfProURL} | sed 's|^http[s]://||g' | sed 's/\..*//' | tr '[a-z]' '[A-Z]' )
 	
 	# Loop each notification possibility and if it
@@ -160,9 +164,10 @@ checkNotifications(){
 			cleanname=$( echo ${name} | sed 's/"//g')
 			days=$( echo ${data} | jq --arg v "${str}" '.[]|select(.type==$v).params.days')
 			id=$( echo ${data} | jq --arg v "${str}" '.[]|select(.type==$v).params.id')
-			if [[ ${name} != "null" ]]; then
+			if [[ ${cleanString} != "null" ]]; then
 				if [[ ${days} != "null" ]]; then
 					if [[ ${id} != "null" ]]; then
+						echo "ID $id not null"
 						message=$( echo "${JPInstance} Notification: ${cleanString} for ${cleanname} in ${days} days" )
 							else
 							message=$( echo "${JPInstance} Notification: ${cleanString} for ${cleanname} in ${days} days" )
