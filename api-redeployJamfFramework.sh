@@ -5,6 +5,7 @@
 #
 # Updated: 3.09.2022 @ Robjschroeder
 # Updated: 07.07.2022 @robjschroeder
+# Updated: 12.07.2022 @robjschroeder
 
 # API permissions needed:
 # Jamf Pro Server Objects > Computers > Read
