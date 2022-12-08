@@ -6,6 +6,12 @@
 # Updated: 3.09.2022 @ Robjschroeder
 # Updated: 07.07.2022 @robjschroeder
 
+# API permissions needed:
+# Jamf Pro Server Objects > Computers > Read
+# Jamf Pro Server Actions > Flush Policy Logs
+# Jamf Pro Server Actions > Send Computer Remote Command To Install Package
+# Jamf Pro Server Settings > Check-In > Read (PI110551)
+
 ##################################################
 # Variables -- edit as needed
 
