@@ -8,6 +8,10 @@
 #
 # Created: 02.15.2023 @robjschroeder
 #
+# Permissions Needed:
+# - Create, Read, Update on Mobile Devices
+# - Read on Smart Device Groups
+# - Send Mobile Device Lost Mode Command
 
 ##################################################
 # Variables -- edit as needed
